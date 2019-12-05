@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Buble chart</title>
+  </head>
+  <body>
+    <h1>Bubble chart</h1>
+    <div class="bubble" ></div>
+    <script src="https://d3js.org/d3.v3.min.js" ></script>
+    <script>
+        let svg = d3.select(".bubble").append("svg")
+          .attr("height",window.innerHeight)
+          .attr("width",window.innerWidth)
+          .style("background","steelblue");
+        let data = [
+            {cx:442,cy:435,r:195,name:"Ali Shah",color:"#ED254E" ,textColor: "#E6E6E6" },
+            {cx:749,cy:270,r:120,name:"Hassan",color:"#E1DC5A" ,textColor:"#ECFFB0"},
+            {cx:525,cy:125,r:123,name:"Sulman",color:"#47A8BD" ,textColor:"#ADE25D"},
+            {cx:759,cy:525,r:123,name:"haider",color:"#D6D1B1" ,textColor:"#A3C82E"},
+            {cx:525,cy:750,r:123,name:"John",color:"#F0EBD8" ,textColor:"#d0EBD8"},
+            {cx:245,cy:170,r:123,name:"Duc",color:"#F5B82E" ,textColor:"#B6A3B1"},
+            {cx:225,cy:750,r:123,name:"Ali",color:"#ADE25D" ,textColor:"#A2B1B1"},
+            {cx:125,cy:450,r:123,name:"Hdaar",color:"#ECFFB0" ,textColor:"#A4CA2F"},
+          ]
+
+        let g = svg.append("g").attr("transform","translate(110,10)")
+        let circle =  g.selectAll("circle")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("cx",d=>d.cx)
+          .attr("cy",d=>d.cy)
+          .attr("r",d=>d.r)
+          .attr("fill",(d,i)=>d.color)
+          .on("mouseover",function(d,i){
+            d3.select(this)
+              .transition()
+              .attr("cx",d=>d.cx + 190)
+              .duration(111)
+          })
+          .on("mouseout",function(d,i){
+            d3.select(this)
+              .transition()
+              .attr("cx",d=>d.cx  )
+              .attr("cy",d=>d.cy )
+              .duration(611)
+
+          })
+      let text =g.selectAll("text")
+            .data(data)
+            .enter().append("text")
+            .attr("x",function(d,i){
+              return d.cx - 50
+            })
+            .attr("y",function(d,i){
+              return d.cy
+            })
+            .style("fill",(d,i)=>d.textColor)
+            .text((d)=>d.name)
+            .style("font-size",d => (d.cx  /  d.cy) + 40 )
+            .style("pointer-events","none")
+    </script>
+  </body>
+</html>
